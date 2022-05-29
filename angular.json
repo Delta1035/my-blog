@@ -41,7 +41,6 @@
           },
           "configurations": {
             "production": {
-              "//": "包的大小提示,超过500k 报warning",
               "budgets": [
                 {
                   "type": "initial",
