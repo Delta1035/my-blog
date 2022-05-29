@@ -31,18 +31,12 @@ jobs:
         run: npm install
       - name: npm run build
         run: npm run build
-
-      # - name: 安装pnpm
-      #   run: npm install -g pnpm
-      # - name: 安装依赖
-      #   run: pnpm install
-      # - name: 构建产物
-      #   run: pnpm run build
-      # - name: 下面开始自动将dist文件夹同步到我的服务器
-      #   uses: sebastianpopp/ftp-action@v2.0.0
-      #   with:
-      #     host: "124.221.95.189:21" #你的nginx服务器公网ip
-      #     user: "delta" #你的nginx服务器用户名
-      #     password: "3363787543" #你的nginx服务器ssh密码
-      #     localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-      #     remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上的什么位置
+      - name: 开始自动将dist文件夹同步到我的服务器
+        uses: sebastianpopp/ftp-action@v2.0.0
+        with:
+          host: "124.221.95.189:21" #你的nginx服务器公网ip
+          user: "delta" #你的nginx服务器用户名
+          password: "3363787543" #你的nginx服务器ssh密码
+          localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
+          remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上/www/wwwroot/delta的什么位置
+          # ===> /www/wwwroot/delta/blog
