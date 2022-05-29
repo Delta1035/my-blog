@@ -38,5 +38,5 @@ jobs:
           user: "delta" #你的nginx服务器用户名
           password: "3363787543" #你的nginx服务器ssh密码
           localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上/www/wwwroot/delta的什么位置
+          remoteDir: "ngblog" #你要把你build好的文件夹放到nginx服务器上/www/wwwroot/delta的什么位置
           # ===> /www/wwwroot/delta/blog
