@@ -23,9 +23,14 @@ jobs:
           node-version: 14.18.0
           # cache 这个插件只支持npm 和 yarn的lockfile, pnpm暂时不支持
           # cache: "npm"
-      - run: npm install -g pnpm
-      - run: npm install
-      - run: npm run build
+      - name: npm install -g @angular/cli
+        run: npm install -g @angular/cli
+      - name: npm install -g pnpm
+        run: npm install -g pnpm
+      - name: npm install
+        run: npm install
+      - name: npm run build
+        run: npm run build
 
       # - name: 安装pnpm
       #   run: npm install -g pnpm
