@@ -1,6 +1,6 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-name: 打包并通过ssh推送到nginx服务器
+name: ssh推送到nginx服务器
 on:
   push:
     branches:
@@ -9,7 +9,8 @@ on:
       - prod
 
 jobs:
-  build:
+  # job id
+  build_web_dist:
     runs-on: ubuntu-latest
     # TODO 这个策略具体作用是什么?
     # strategy:
@@ -27,8 +28,10 @@ jobs:
           cache: "npm"
       - name: 安装pnpm
         run: npm install -g pnpm
-      - run: pnpm install
-      - run: pnpm run build
+      - name: 安装依赖
+        run: pnpm install
+      - name: 构建产物
+        run: pnpm run build
       - name: 下面开始自动将dist文件夹同步到我的服务器
         uses: sebastianpopp/ftp-action@v2.0.0
         with:
