@@ -23,9 +23,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{matrix.node-version}}
-          cache: "npm"
-      - run: npm install
-      - run: npm run build
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm run build
       - name: 下面开始自动将dist文件夹同步到我的服务器
         uses: sebastianpopp/ftp-action@v2.0.0
         with:
