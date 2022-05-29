@@ -5,11 +5,7 @@ on:
   push:
     branches:
       - main
-      - qas
-      - prod
-
 jobs:
-  # job id
   build_web_dist:
     runs-on: ubuntu-latest
     # TODO 这个策略具体作用是什么?
@@ -19,24 +15,27 @@ jobs:
     #     node-version: [14.18.0]
     # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-      - name: 检出仓库
+      # - name: 检出仓库
       - uses: actions/checkout@v2
       - name: 使用nodejs 14.18.0 执行后面的任务
         uses: actions/setup-node@v2
         with:
           node-version: 14.18.0
           cache: "npm"
-      - name: 安装pnpm
-        run: npm install -g pnpm
-      - name: 安装依赖
-        run: pnpm install
-      - name: 构建产物
-        run: pnpm run build
-      - name: 下面开始自动将dist文件夹同步到我的服务器
-        uses: sebastianpopp/ftp-action@v2.0.0
-        with:
-          host: "124.221.95.189:21" #你的nginx服务器公网ip
-          user: "delta" #你的nginx服务器用户名
-          password: "3363787543" #你的nginx服务器ssh密码
-          localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上的什么位置
+      - run: npm install
+      - run: npm run build
+
+      # - name: 安装pnpm
+      #   run: npm install -g pnpm
+      # - name: 安装依赖
+      #   run: pnpm install
+      # - name: 构建产物
+      #   run: pnpm run build
+      # - name: 下面开始自动将dist文件夹同步到我的服务器
+      #   uses: sebastianpopp/ftp-action@v2.0.0
+      #   with:
+      #     host: "124.221.95.189:21" #你的nginx服务器公网ip
+      #     user: "delta" #你的nginx服务器用户名
+      #     password: "3363787543" #你的nginx服务器ssh密码
+      #     localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
+      #     remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上的什么位置
