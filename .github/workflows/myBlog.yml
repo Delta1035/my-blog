@@ -21,7 +21,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.18.0
-          cache: "npm"
+          # cache 这个插件只支持npm 和 yarn的lockfile, pnpm暂时不支持
+          # cache: "npm"
       - run: npm install -g pnpm
       - run: npm install
       - run: npm run build
