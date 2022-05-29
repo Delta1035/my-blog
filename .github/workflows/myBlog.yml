@@ -1,0 +1,36 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: 打包并通过ssh推送到nginx服务器
+on:
+  push:
+    branches:
+      - main
+      - qas
+      - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # TODO 这个策略具体作用是什么?
+    strategy:
+      # TODO fail-fast: true
+      matrix:
+        node-version: [14.18.0]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - uses: actions/checkout@v2
+      - name: 使用nodejs ${{matrix.node-version}} 执行后面的任务
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: "npm"
+      - run: npm install
+      - run: npm run build
+      - name: 下面开始自动将dist文件夹同步到我的服务器
+        uses: sebastianpopp/ftp-action@v2.0.0
+        with:
+          host: "124.221.95.189:21" #你的nginx服务器公网ip
+          user: "delta" #你的nginx服务器用户名
+          password: "3363787543" #你的nginx服务器ssh密码
+          localDir: "dist" #项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
+          remoteDir: "blog" #你要把你build好的文件夹放到nginx服务器上的什么位置
